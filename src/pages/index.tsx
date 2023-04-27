@@ -23,16 +23,16 @@ export default function Home() {
         const form = e.target as HTMLFormElement
         // Not very robust, would use uuid instead for example
         const newCatId = Math.floor(Math.random() * 10000)
+        const image = URL.createObjectURL(form.image.files[0])
 
         const newCat: Cat = {
             dob: form.dob.value,
             name: form.catName.value,
             gender: form.gender.value,
             bio: form.bio.value,
-            imagePath: form.image.value,
+            imagePath: image,
             id: newCatId,
         }
-
         dispatch(addToCatsList(newCat))
     }
 
