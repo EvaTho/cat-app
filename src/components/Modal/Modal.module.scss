@@ -1,0 +1,32 @@
+.modalWrapper {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0.3);
+
+    .modal {
+        max-width: 500px;
+        background-color: white;
+        border-radius: 16px;
+
+        position: relative;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .closeButton {
+        border: 2px solid black;
+        color: black;
+
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+
+        position: absolute;
+        top: 16px;
+        left: 16px;
+    }
+}
