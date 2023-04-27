@@ -7,10 +7,35 @@ import CatForm from '@/components/CatForm/CatForm'
 import Modal from '@/components/Modal/Modal'
 import AddCatButton from '@/components/Buttons/AddCatButton/AddCatButton'
 import { useState } from 'react'
+import { Cat } from '@/types/Cat'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCatsList, selectCatsList } from '@/store/catSlice'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+    const dispatch = useDispatch()
+    const catsList = useSelector(selectCatsList)
+
+    const submit = (e: React.FormEvent) => {
+        e.preventDefault()
+        const form = e.target as HTMLFormElement
+        // Not very robust, would use uuid instead for example
+        const newCatId = Math.floor(Math.random() * 10000)
+
+        const newCat: Cat = {
+            dob: form.dob.value,
+            name: form.catName.value,
+            gender: form.gender.value,
+            bio: form.bio.value,
+            imagePath: form.image.value,
+            id: newCatId,
+        }
+
+        dispatch(addToCatsList(newCat))
+    }
+
     const [showForm, setShowForm] = useState(false)
 
     const openForm = () => {
@@ -36,7 +61,10 @@ export default function Home() {
             </Head>
             <main className={`${styles.main} ${inter.className}`}>
                 {showForm && (
-                    <Modal onClickClose={closeForm} content={<CatForm />} />
+                    <Modal
+                        onClickClose={closeForm}
+                        content={<CatForm onSubmit={submit} />}
+                    />
                 )}
 
                 <section className={styles.header}>
@@ -44,13 +72,17 @@ export default function Home() {
                 </section>
 
                 <section className={styles.catList}>
-                    <CatCard
-                        gender="female"
-                        name="Dummy Cat Card"
-                        bio="lorem ipsum dolor sit amet, something something cute cat description"
-                        imagePath="/assets/images/.....png"
-                        dob="1997/02/18"
-                    />
+                    {catsList.map((cat) => (
+                        <CatCard
+                            name={cat.name}
+                            dob={cat.dob}
+                            gender={cat.gender}
+                            imagePath={cat.imagePath}
+                            bio={cat.bio}
+                            key={cat.id}
+                        />
+                    ))}
+
                     <AddCatButton callback={openForm} />
                 </section>
             </main>

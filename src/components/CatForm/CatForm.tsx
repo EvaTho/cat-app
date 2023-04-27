@@ -1,22 +1,20 @@
 import styles from './CatForm.module.scss'
 
-interface CatFormProps {}
+interface CatFormProps {
+    onSubmit: (e: React.FormEvent) => void
+}
 
-const CatForm: React.FC<CatFormProps> = ({}) => {
-    const submit = (e: React.MouseEvent<HTMLInputElement>) => {
-        e.preventDefault()
-        console.log('submit')
-    }
+const CatForm: React.FC<CatFormProps> = ({ onSubmit }) => {
     return (
         <>
             {/* Sanitize all user input! */}
             <h2 className={styles.title}>Add new kitty</h2>
-            <form className={styles.form}>
-                <label htmlFor="name">Name</label>
+            <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+                <label htmlFor="catName">Name</label>
                 <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="catName"
+                    name="catName"
                     defaultValue="Sir Cattington"
                     required
                     minLength={2}
@@ -38,16 +36,13 @@ const CatForm: React.FC<CatFormProps> = ({}) => {
 
                 <input
                     id="fileSelect"
+                    name="image"
                     type="file"
                     multiple
                     className={styles.files}
                 />
 
-                <input
-                    type="submit"
-                    value="Submit"
-                    onClick={(e) => submit(e)}
-                />
+                <input type="submit" value="Submit" />
             </form>
         </>
     )
