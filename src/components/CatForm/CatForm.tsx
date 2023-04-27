@@ -3,7 +3,8 @@ import styles from './CatForm.module.scss'
 interface CatFormProps {}
 
 const CatForm: React.FC<CatFormProps> = ({}) => {
-    const submit = () => {
+    const submit = (e: React.MouseEvent<HTMLInputElement>) => {
+        e.preventDefault()
         console.log('submit')
     }
     return (
@@ -16,7 +17,7 @@ const CatForm: React.FC<CatFormProps> = ({}) => {
                     type="text"
                     id="name"
                     name="name"
-                    value="Sir Cattington"
+                    defaultValue="Sir Cattington"
                     required
                     minLength={2}
                     maxLength={20}
@@ -24,7 +25,6 @@ const CatForm: React.FC<CatFormProps> = ({}) => {
 
                 <label htmlFor="dob">Date of Birth </label>
                 <input type="date" id="dob" name="dob" />
-
                 <label htmlFor="gender">Gender </label>
                 <select name="gender" id="gender" required>
                     <option value="Female">Female</option>
@@ -34,8 +34,20 @@ const CatForm: React.FC<CatFormProps> = ({}) => {
 
                 <label htmlFor="bio">Bio</label>
                 <textarea id="bio" name="bio" required></textarea>
+                <label htmlFor="fileSelect">Image</label>
 
-                <input type="submit" value="Submit" />
+                <input
+                    id="fileSelect"
+                    type="file"
+                    multiple
+                    className={styles.files}
+                />
+
+                <input
+                    type="submit"
+                    value="Submit"
+                    onClick={(e) => submit(e)}
+                />
             </form>
         </>
     )

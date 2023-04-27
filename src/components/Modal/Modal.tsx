@@ -13,9 +13,7 @@ const Modal: React.FC<ModalProps> = ({ content, onClickClose }) => {
                 <button
                     className={styles.closeButton}
                     onClick={(e) => onClickClose()}
-                >
-                    X
-                </button>
+                />
                 <div className={styles.content}>{content}</div>
             </div>
         </div>

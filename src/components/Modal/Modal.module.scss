@@ -25,16 +25,31 @@
     }
 
     .closeButton {
-        border: 2px solid black;
+        border: none;
         color: black;
         background-color: white;
 
         border-radius: 50%;
-        width: 50px;
-        height: 50px;
 
         position: absolute;
         top: 16px;
-        right: 16px;
+        right: 24px;
+
+        &:before,
+        &:after {
+            position: absolute;
+            right: 0;
+
+            content: ' ';
+            height: 22px;
+            width: 2px;
+            background-color: color(black);
+        }
+        &:before {
+            transform: rotate(45deg);
+        }
+        &:after {
+            transform: rotate(-45deg);
+        }
     }
 }
