@@ -29,47 +29,49 @@ const CatForm: React.FC<CatFormProps> = ({ onSubmit }) => {
                     defaultValue="2022-01-01"
                 />
 
-                <select
-                    name="gender"
-                    id="gender"
-                    required
-                    defaultValue="SelectGender"
-                >
-                    <option value="SelectGender" disabled hidden>
+                <select name="gender" id="gender" required>
+                    <option value="SelectGender" selected disabled hidden>
                         Select Gender
                     </option>
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
                     <option value="NonBinary">Non-binary</option>
                 </select>
-
+                {/*NOTE:  Max length to keep with designs, but could be handled differently? */}
                 <textarea
                     id="bio"
                     name="bio"
                     required
                     defaultValue="Bio"
+                    maxLength={75}
                 ></textarea>
-                <label htmlFor="fileSelect">Image</label>
 
-                <input
-                    id="fileSelect"
-                    name="image"
-                    type="file"
-                    className={styles.files}
-                    onChange={(event) => {
-                        if (event.target.files) {
-                            const image = URL.createObjectURL(
-                                event.target.files[0]
-                            )
-                            setSelectedImage(image)
-                        }
-                    }}
-                />
-                {selectedImage && (
-                    <div>
-                        <img width={'250px'} src={selectedImage} />
-                    </div>
-                )}
+                <div className={styles.imageSelect}>
+                    <input
+                        id="fileSelect"
+                        name="image"
+                        type="file"
+                        required
+                        className={styles.files}
+                        onChange={(event) => {
+                            if (event.target.files) {
+                                const image = URL.createObjectURL(
+                                    event.target.files[0]
+                                )
+                                setSelectedImage(image)
+                            }
+                        }}
+                    />
+                    {/* NOTE: Added image preview for nicer UX :)  */}
+                    {selectedImage && (
+                        <div className={styles.imagePreviewWrapper}>
+                            <img
+                                className={styles.imagePreview}
+                                src={selectedImage}
+                            />
+                        </div>
+                    )}
+                </div>
 
                 <input type="submit" value="Submit" />
             </form>

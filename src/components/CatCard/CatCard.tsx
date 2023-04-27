@@ -16,14 +16,16 @@ const CatCard: React.FC<CatProps> = ({ name, imagePath, bio, dob, gender }) => {
                     <img
                         className={styles.profilePic}
                         src={imagePath}
-                        alt={`A picture of ${name}`}
+                        alt={`A picture of a cat named ${name}`}
                     />
                 </div>
                 <div className={styles.content}>
-                    <h3>{name}</h3>
-                    <p>{dob}</p>
-                    <p>{gender}</p>
-                    <p>{bio}</p>
+                    <h3 className={styles.name}>{name}</h3>
+                    <div className={styles.dobAndGender}>
+                        <p>{dob}</p>
+                        <p>{gender}</p>
+                    </div>
+                    <p className={styles.bio}>{bio}</p>
                 </div>
             </div>
         </>

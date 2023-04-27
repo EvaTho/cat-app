@@ -4,3 +4,8 @@
 
     min-height: 100vh;
 }
+
+.catList {
+    display: flex;
+    flex-wrap: wrap;
+}
