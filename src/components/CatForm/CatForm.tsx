@@ -9,8 +9,8 @@ const CatForm: React.FC<CatFormProps> = ({}) => {
     return (
         <>
             {/* Sanitize all user input! */}
-            <h2>Add new kitty</h2>
-            <form action="/action_page.php">
+            <h2 className={styles.title}>Add new kitty</h2>
+            <form className={styles.form}>
                 <label htmlFor="name">Name</label>
                 <input
                     type="text"
@@ -35,7 +35,7 @@ const CatForm: React.FC<CatFormProps> = ({}) => {
                 <label htmlFor="bio">Bio</label>
                 <textarea id="bio" name="bio" required></textarea>
 
-                <input type="submit" value="Submit" onClick={submit} />
+                <input type="submit" value="Submit" />
             </form>
         </>
     )

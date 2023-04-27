@@ -3,13 +3,19 @@ import styles from './Modal.module.scss'
 
 interface ModalProps {
     content: ReactElement
+    onClickClose: () => void
 }
-
-const Modal: React.FC<ModalProps> = ({ content }) => {
+// Bonus functionality: Click outside to close
+const Modal: React.FC<ModalProps> = ({ content, onClickClose }) => {
     return (
         <div className={styles.modalWrapper}>
             <div className={styles.modal}>
-                <button className={styles.closeButton}>X</button>
+                <button
+                    className={styles.closeButton}
+                    onClick={(e) => onClickClose()}
+                >
+                    X
+                </button>
                 <div className={styles.content}>{content}</div>
             </div>
         </div>

@@ -1,0 +1,19 @@
+.title {
+    color: #111111;
+    margin-bottom: 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    color: color(black);
+
+    input,
+    select,
+    textarea {
+        margin-bottom: 12px;
+        margin-top: 6px;
+
+        padding: 4px;
+    }
+}

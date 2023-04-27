@@ -3,10 +3,17 @@
     width: 100vw;
     height: 100vh;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     background-color: rgba(0, 0, 0, 0.3);
 
+    backdrop-filter: blur(6px);
+
     .modal {
-        max-width: 500px;
+        min-width: 450px;
         background-color: white;
         border-radius: 16px;
 
@@ -20,6 +27,7 @@
     .closeButton {
         border: 2px solid black;
         color: black;
+        background-color: white;
 
         border-radius: 50%;
         width: 50px;
@@ -27,6 +35,6 @@
 
         position: absolute;
         top: 16px;
-        left: 16px;
+        right: 16px;
     }
 }
