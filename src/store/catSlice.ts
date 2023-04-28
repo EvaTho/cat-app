@@ -38,14 +38,6 @@ export const catSlice = createSlice({
             }
         },
     },
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.cats,
-            }
-        },
-    },
 })
 
 export const { addToCatsList, removeFromCatsList, updateCatInList } =
