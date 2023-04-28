@@ -36,7 +36,8 @@ const CatForm: React.FC<CatFormProps> = ({
                     type="text"
                     id="catName"
                     name="catName"
-                    defaultValue={name ?? 'Name'}
+                    defaultValue={name ?? ''}
+                    placeholder="Name"
                     required
                     minLength={2}
                     maxLength={20}
@@ -67,7 +68,8 @@ const CatForm: React.FC<CatFormProps> = ({
                     id="bio"
                     name="bio"
                     required
-                    defaultValue={bio ?? 'Bio'}
+                    defaultValue={bio ?? ''}
+                    placeholder="Bio"
                     maxLength={75}
                 ></textarea>
 
