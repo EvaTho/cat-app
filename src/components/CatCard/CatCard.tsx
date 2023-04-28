@@ -1,4 +1,6 @@
 import styles from './CatCard.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCatById } from '@/store/catSlice'
 
 interface CatProps {
     name: string
@@ -6,12 +8,28 @@ interface CatProps {
     bio: string
     dob: string
     gender: string
+    id: number
+    onEdit: (id: number) => void
+    onRemove: (id: number) => void
 }
 
-const CatCard: React.FC<CatProps> = ({ name, imagePath, bio, dob, gender }) => {
+const CatCard: React.FC<CatProps> = ({
+    name,
+    imagePath,
+    bio,
+    dob,
+    gender,
+    id,
+    onEdit,
+    onRemove,
+}) => {
     return (
         <>
             <div className={styles.catCardWrapper}>
+                <div className={styles.catCardButtons}>
+                    <button onClick={() => onEdit(id)}>Edit</button>
+                    <button onClick={() => onRemove(id)}>Remove</button>
+                </div>
                 <div className={styles.imageWrapper}>
                     <img
                         className={styles.profilePic}

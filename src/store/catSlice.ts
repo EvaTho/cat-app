@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { AppState } from './store'
 import { HYDRATE } from 'next-redux-wrapper'
 import { Cat } from '@/types/Cat'
+import { AnyAction } from 'redux'
 
 // Type for our state
 export interface CatState {
@@ -22,10 +23,19 @@ export const catSlice = createSlice({
             state.catsList.push(action.payload)
         },
         removeFromCatsList(state, action) {
-            // find cat by ID, remove from list
+            return {
+                catsList: state.catsList.filter(
+                    (cat) => cat.id !== action.payload
+                ),
+            }
         },
         updateCatInList(state, action) {
-            // find cat in state, update with payload
+            const newCat = action.payload
+            return {
+                catsList: state.catsList.map((cat) =>
+                    cat.id === newCat.id ? { ...newCat } : cat
+                ),
+            }
         },
     },
     extraReducers: {
@@ -42,5 +52,6 @@ export const { addToCatsList, removeFromCatsList, updateCatInList } =
     catSlice.actions
 
 export const selectCatsList = (state: AppState) => state.cats.catsList
-
+export const selectCatById = (action: AnyAction) => (state: AppState) =>
+    state.cats.catsList.filter((cat) => cat.id === action.payload)
 export default catSlice.reducer

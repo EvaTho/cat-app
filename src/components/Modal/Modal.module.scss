@@ -12,6 +12,8 @@
 
     backdrop-filter: blur(6px);
 
+    z-index: 10000;
+
     .modal {
         min-width: 450px;
         background-color: white;

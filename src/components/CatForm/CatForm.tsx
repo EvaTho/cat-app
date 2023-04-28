@@ -1,12 +1,32 @@
 import styles from './CatForm.module.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Cat } from '@/types/Cat'
 
 interface CatFormProps {
     onSubmit: (e: React.FormEvent) => void
+    name?: string
+    dob?: string
+    gender?: string
+    bio?: string
+    imagePath?: string
+    id?: number
 }
 
-const CatForm: React.FC<CatFormProps> = ({ onSubmit }) => {
+const CatForm: React.FC<CatFormProps> = ({
+    onSubmit,
+    name,
+    dob,
+    gender,
+    bio,
+    imagePath,
+}) => {
     const [selectedImage, setSelectedImage] = useState('')
+
+    useEffect(() => {
+        if (imagePath) {
+            setSelectedImage(imagePath)
+        }
+    }, [])
     return (
         <>
             {/* Sanitize all user input! */}
@@ -16,7 +36,7 @@ const CatForm: React.FC<CatFormProps> = ({ onSubmit }) => {
                     type="text"
                     id="catName"
                     name="catName"
-                    defaultValue="Name"
+                    defaultValue={name ?? 'Name'}
                     required
                     minLength={2}
                     maxLength={20}
@@ -26,11 +46,16 @@ const CatForm: React.FC<CatFormProps> = ({ onSubmit }) => {
                     type="date"
                     id="dob"
                     name="dob"
-                    defaultValue="2022-01-01"
+                    defaultValue={dob ?? ''}
                 />
 
-                <select name="gender" id="gender" required>
-                    <option value="SelectGender" selected disabled hidden>
+                <select
+                    name="gender"
+                    id="gender"
+                    required
+                    defaultValue={gender ?? ''}
+                >
+                    <option value="SelectGender" disabled hidden>
                         Select Gender
                     </option>
                     <option value="Female">Female</option>
@@ -42,7 +67,7 @@ const CatForm: React.FC<CatFormProps> = ({ onSubmit }) => {
                     id="bio"
                     name="bio"
                     required
-                    defaultValue="Bio"
+                    defaultValue={bio ?? 'Bio'}
                     maxLength={75}
                 ></textarea>
 

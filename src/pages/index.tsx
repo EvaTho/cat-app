@@ -10,32 +10,73 @@ import { useState } from 'react'
 import { Cat } from '@/types/Cat'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCatsList, selectCatsList } from '@/store/catSlice'
+import {
+    addToCatsList,
+    removeFromCatsList,
+    updateCatInList,
+    selectCatsList,
+} from '@/store/catSlice'
 
 const inter = Inter({ subsets: ['latin'] })
-
 export default function Home() {
     const dispatch = useDispatch()
     const catsList = useSelector(selectCatsList)
 
-    const submit = (e: React.FormEvent) => {
-        e.preventDefault()
-        const form = e.target as HTMLFormElement
-        // Not very robust, would use uuid instead for example
-        const newCatId = Math.floor(Math.random() * 10000)
-        const image = URL.createObjectURL(form.image.files[0])
+    const [editingEntry, setEditingEntry] = useState<Cat>()
 
-        const newCat: Cat = {
-            dob: form.dob.value,
-            name: form.catName.value,
-            gender: form.gender.value,
-            bio: form.bio.value,
+    const createNewCatEntry = (catForm: HTMLFormElement): Cat => {
+        // Not very robust, could use uuid instead for example
+        const newCatId = Math.floor(Math.random() * 10000)
+        const image = URL.createObjectURL(catForm.image.files[0])
+
+        const cat: Cat = {
+            dob: catForm.dob.value,
+            name: catForm.catName.value,
+            gender: catForm.gender.value,
+            bio: catForm.bio.value,
             imagePath: image,
-            id: newCatId,
+            id: editingEntry ? editingEntry.id : newCatId,
         }
-        dispatch(addToCatsList(newCat))
+
+        return cat
     }
 
+    const submit = (e: React.FormEvent) => {
+        e.preventDefault()
+
+        const form = e.target as HTMLFormElement
+        const newCat = createNewCatEntry(form)
+
+        if (editingEntry) {
+            dispatch(updateCatInList(newCat))
+            setEditingEntry(undefined)
+        } else {
+            dispatch(addToCatsList(newCat))
+        }
+
+        closeForm()
+    }
+
+    const findCatById = (id: number) => {
+        return catsList.find((cat) => cat.id === id)
+    }
+
+    const onEdit = function (id: number) {
+        const cat = findCatById(id)
+
+        if (cat) {
+            setEditingEntry(cat)
+            openForm()
+        } else {
+            alert('Could not find entry')
+        }
+    }
+
+    const onRemove = (id: number) => {
+        dispatch(removeFromCatsList(id))
+    }
+
+    // Form methods and state
     const [showForm, setShowForm] = useState(false)
 
     const openForm = () => {
@@ -63,7 +104,21 @@ export default function Home() {
                 {showForm && (
                     <Modal
                         onClickClose={closeForm}
-                        content={<CatForm onSubmit={submit} />}
+                        content={
+                            editingEntry ? (
+                                <CatForm
+                                    name={editingEntry.name}
+                                    bio={editingEntry.bio}
+                                    dob={editingEntry.dob}
+                                    gender={editingEntry.gender}
+                                    imagePath={editingEntry.imagePath}
+                                    id={editingEntry.id}
+                                    onSubmit={submit}
+                                />
+                            ) : (
+                                <CatForm onSubmit={submit} />
+                            )
+                        }
                     />
                 )}
 
@@ -80,6 +135,9 @@ export default function Home() {
                             imagePath={cat.imagePath}
                             bio={cat.bio}
                             key={cat.id}
+                            id={cat.id}
+                            onEdit={onEdit}
+                            onRemove={onRemove}
                         />
                     ))}
 
