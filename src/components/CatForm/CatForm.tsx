@@ -1,5 +1,6 @@
 import styles from './CatForm.module.scss'
 import { useState, useEffect } from 'react'
+import Select from '@/components/Inputs/InputSelect/InputSelect'
 
 interface CatFormProps {
     onSubmit: (e: React.FormEvent) => void
@@ -50,19 +51,19 @@ const CatForm: React.FC<CatFormProps> = ({
                     defaultValue={dob ?? ''}
                 />
 
-                <select
+                <Select
                     name="gender"
                     id="gender"
                     required
                     defaultValue={gender ?? ''}
-                >
-                    <option value="SelectGender" disabled hidden>
-                        Select Gender
-                    </option>
-                    <option value="Female">Female</option>
-                    <option value="Male">Male</option>
-                    <option value="NonBinary">Non-binary</option>
-                </select>
+                    options={[
+                        { value: 'SelectGender', name: 'Select Gender' },
+                        { value: 'Female', name: 'Female' },
+                        { value: 'Male', name: 'Male' },
+                        { value: 'NonBinary', name: 'Non-binary' },
+                    ]}
+                />
+
                 {/*NOTE:  Max length to keep with designs, but could be handled differently? */}
                 <textarea
                     id="bio"
