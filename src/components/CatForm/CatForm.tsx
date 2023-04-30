@@ -1,6 +1,5 @@
 import styles from './CatForm.module.scss'
 import { useState, useEffect } from 'react'
-import { Cat } from '@/types/Cat'
 
 interface CatFormProps {
     onSubmit: (e: React.FormEvent) => void
@@ -29,7 +28,8 @@ const CatForm: React.FC<CatFormProps> = ({
     }, [])
     return (
         <>
-            {/* Sanitize all user input! */}
+            {/* NOTE: Sanitize all user input */}
+            {/*NOTE: Could be abstracted, different input fields made into smaller components with props*/}
             <h2 className={styles.title}>Add new kitty</h2>
             <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
                 <input
@@ -78,6 +78,7 @@ const CatForm: React.FC<CatFormProps> = ({
                         id="fileSelect"
                         name="image"
                         type="file"
+                        accept="image/*"
                         required
                         className={styles.files}
                         onChange={(event) => {

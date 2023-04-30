@@ -9,6 +9,7 @@ import Modal from '@/components/Modal/Modal'
 import AddCatButton from '@/components/Buttons/AddCatButton/AddCatButton'
 import { useState } from 'react'
 import { Cat } from '@/types/Cat'
+import * as DOMPurify from 'dompurify'
 
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -46,10 +47,10 @@ export default function Home() {
 
         const cat: Cat = {
             dob: catForm.dob.value,
-            name: catForm.catName.value,
+            name: DOMPurify.sanitize(catForm.catName.value),
             gender: catForm.gender.value,
-            bio: catForm.bio.value,
-            imagePath: image,
+            bio: DOMPurify.sanitize(catForm.bio.value),
+            imagePath: DOMPurify.sanitize(image),
             id: editingEntry ? editingEntry.id : newCatId,
         }
 
@@ -105,8 +106,10 @@ export default function Home() {
     const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
 
-        setSearchInput(e.target.value)
-        dispatch(searchCatList(e.target.value))
+        const query = DOMPurify.sanitize(e.target.value)
+
+        setSearchInput(query)
+        dispatch(searchCatList(query))
     }
     return (
         <>
