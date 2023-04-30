@@ -83,6 +83,32 @@ const CatForm: React.FC<CatFormProps> = ({
                         className={styles.files}
                         onChange={(event) => {
                             if (event.target.files) {
+                                const filenameMatches = event.target.files[0]
+                                    .name
+                                    ? event.target.files[0].name.match(
+                                          /\.([^\.]+)$/
+                                      )
+                                    : ''
+
+                                const filename = filenameMatches
+                                    ? filenameMatches[1]
+                                    : ''
+
+                                switch (filename) {
+                                    case 'jpg':
+                                    case 'bmp':
+                                    case 'png':
+                                    case 'tif':
+                                    case 'webp':
+                                    case 'avif':
+                                        alert('Allowed')
+                                        break
+                                    default:
+                                        alert('Not allowed')
+                                        event.target.value = ''
+                                        return
+                                }
+
                                 const image = URL.createObjectURL(
                                     event.target.files[0]
                                 )
