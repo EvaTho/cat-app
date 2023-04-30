@@ -34,13 +34,17 @@
         border-radius: 50%;
 
         position: absolute;
-        top: 16px;
-        right: 24px;
+        top: 8px;
+        right: 8px;
+
+        width: 35px;
+        height: 35px;
 
         &:before,
         &:after {
             position: absolute;
-            right: 0;
+            right: 16px;
+            top: 8px;
 
             content: ' ';
             height: 22px;

@@ -30,7 +30,7 @@ const CatForm: React.FC<CatFormProps> = ({
     return (
         <>
             {/* NOTE: Sanitize all user input */}
-            {/*NOTE: Could be abstracted, different input fields made into smaller components with props*/}
+            {/* NOTE: Could be abstracted, different input fields made into smaller components with props*/}
             <h2 className={styles.title}>Add new kitty</h2>
             <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
                 <input
