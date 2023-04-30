@@ -5,3 +5,4 @@
 -   Feat: (UX idea) Click outside Form modal to close it
 -   Feat: (UX idea) Alert "Are you sure?" when deleting a cat entry in the list (if clicked by mistake for example)
 -   Chore: abstract smaller components, make "defaultbutton" and input fields into their own comps with props to future-proof the project better
+-   Bug: Proper form validation. Right now date and gender can be left empty

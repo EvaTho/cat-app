@@ -48,6 +48,7 @@ const CatForm: React.FC<CatFormProps> = ({
                     type="date"
                     id="dob"
                     name="dob"
+                    required
                     defaultValue={dob ?? ''}
                 />
 
