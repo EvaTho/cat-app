@@ -11,7 +11,7 @@ interface SelectProps {
     defaultValue?: string
     required?: boolean
     options: Array<Option>
-    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 const InputSelect: React.FC<SelectProps> = ({
     options,
