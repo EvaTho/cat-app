@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import CatCard from '@/components/CatCard/CatCard'
 import Header from '@/components/Header/Header'
+import Search from '@/components/Search/Search'
 import CatForm from '@/components/CatForm/CatForm'
 import Modal from '@/components/Modal/Modal'
 import AddCatButton from '@/components/Buttons/AddCatButton/AddCatButton'
@@ -15,14 +16,18 @@ import {
     removeFromCatsList,
     updateCatInList,
     selectCatsList,
+    searchCatList,
+    selectSearchResults,
 } from '@/store/catSlice'
 
 const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
     const dispatch = useDispatch()
     const catsList = useSelector(selectCatsList)
+    const searchResults = useSelector(selectSearchResults)
 
     const [editingEntry, setEditingEntry] = useState<Cat>()
+    const [searchInput, setSearchInput] = useState('')
 
     const createNewCatEntry = (catForm: HTMLFormElement): Cat => {
         // Not very robust, could use uuid instead for example
@@ -86,6 +91,13 @@ export default function Home() {
     const closeForm = () => {
         setShowForm(false)
     }
+
+    const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault()
+
+        setSearchInput(e.target.value)
+        dispatch(searchCatList(e.target.value))
+    }
     return (
         <>
             <Head>
@@ -101,6 +113,47 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className={`${styles.main} ${inter.className}`}>
+                <section className={styles.header}>
+                    <Header copy="Furry Friends" />
+                    <Search
+                        placeholder="Search"
+                        onSearch={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            onSearch(e)
+                        }
+                    />
+                </section>
+                <section className={styles.catList}>
+                    {searchInput
+                        ? searchResults.map((cat: Cat) => (
+                              <CatCard
+                                  name={cat.name}
+                                  dob={cat.dob}
+                                  gender={cat.gender}
+                                  imagePath={cat.imagePath}
+                                  bio={cat.bio}
+                                  key={cat.id}
+                                  id={cat.id}
+                                  onEdit={onEdit}
+                                  onRemove={onRemove}
+                              />
+                          ))
+                        : catsList.map((cat: Cat) => (
+                              <CatCard
+                                  name={cat.name}
+                                  dob={cat.dob}
+                                  gender={cat.gender}
+                                  imagePath={cat.imagePath}
+                                  bio={cat.bio}
+                                  key={cat.id}
+                                  id={cat.id}
+                                  onEdit={onEdit}
+                                  onRemove={onRemove}
+                              />
+                          ))}
+
+                    <AddCatButton callback={openForm} />
+                </section>
+
                 {showForm && (
                     <Modal
                         onClickClose={closeForm}
@@ -121,28 +174,6 @@ export default function Home() {
                         }
                     />
                 )}
-
-                <section className={styles.header}>
-                    <Header copy="Furry Friends" />
-                </section>
-
-                <section className={styles.catList}>
-                    {catsList.map((cat) => (
-                        <CatCard
-                            name={cat.name}
-                            dob={cat.dob}
-                            gender={cat.gender}
-                            imagePath={cat.imagePath}
-                            bio={cat.bio}
-                            key={cat.id}
-                            id={cat.id}
-                            onEdit={onEdit}
-                            onRemove={onRemove}
-                        />
-                    ))}
-
-                    <AddCatButton callback={openForm} />
-                </section>
             </main>
         </>
     )
