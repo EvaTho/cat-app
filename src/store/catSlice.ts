@@ -22,22 +22,28 @@ export const catSlice = createSlice({
     reducers: {
         addToCatsList(state, action) {
             state.catsList.push(action.payload)
+            localStorage.setItem('cats', JSON.stringify(state.catsList))
         },
         removeFromCatsList(state, action) {
+            const filteredCatsList = state.catsList.filter(
+                (cat) => cat.id !== action.payload
+            )
+
+            localStorage.setItem('cats', JSON.stringify(filteredCatsList))
             return {
                 ...state,
-                catsList: state.catsList.filter(
-                    (cat) => cat.id !== action.payload
-                ),
+                catsList: filteredCatsList,
             }
         },
         updateCatInList(state, action) {
             const newCat = action.payload
+            const newList = state.catsList.map((cat) =>
+                cat.id === newCat.id ? { ...newCat } : cat
+            )
+            localStorage.setItem('cats', JSON.stringify(newList))
             return {
                 ...state,
-                catsList: state.catsList.map((cat) =>
-                    cat.id === newCat.id ? { ...newCat } : cat
-                ),
+                catsList: newList,
             }
         },
         searchCatList(state, action) {
@@ -49,6 +55,12 @@ export const catSlice = createSlice({
                 }),
             }
         },
+        setListFromLocalStorage(state, action) {
+            return {
+                ...state,
+                catsList: action.payload,
+            }
+        },
     },
 })
 
@@ -57,6 +69,7 @@ export const {
     removeFromCatsList,
     updateCatInList,
     searchCatList,
+    setListFromLocalStorage,
 } = catSlice.actions
 
 export const selectCatsList = (state: AppState) => state.cats.catsList

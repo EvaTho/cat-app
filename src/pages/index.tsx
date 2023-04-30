@@ -10,6 +10,7 @@ import AddCatButton from '@/components/Buttons/AddCatButton/AddCatButton'
 import { useState } from 'react'
 import { Cat } from '@/types/Cat'
 
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     addToCatsList,
@@ -18,6 +19,7 @@ import {
     selectCatsList,
     searchCatList,
     selectSearchResults,
+    setListFromLocalStorage,
 } from '@/store/catSlice'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -28,6 +30,14 @@ export default function Home() {
 
     const [editingEntry, setEditingEntry] = useState<Cat>()
     const [searchInput, setSearchInput] = useState('')
+
+    const [localList, setLocalList] = useState<Array<Cat>>()
+
+    useEffect(() => {
+        const list = localStorage.getItem('cats')
+        const parsedList = list ? JSON.parse(list) : []
+        if (parsedList) dispatch(setListFromLocalStorage(parsedList))
+    }, [])
 
     const createNewCatEntry = (catForm: HTMLFormElement): Cat => {
         // Not very robust, could use uuid instead for example
