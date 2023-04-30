@@ -61,6 +61,25 @@ export const catSlice = createSlice({
                 catsList: action.payload,
             }
         },
+        sortListByName(state, action) {
+            const direction = action.payload
+            const sortedList = state.catsList.slice().sort((a, b) => {
+                const nameA = a.name.toUpperCase()
+                const nameB = b.name.toUpperCase()
+                if (nameA > nameB) {
+                    return direction === 'ascending' ? 1 : -1
+                }
+                if (nameA < nameB) {
+                    return direction === 'ascending' ? -1 : 1
+                }
+
+                return 0
+            })
+            return {
+                ...state,
+                catsList: sortedList,
+            }
+        },
     },
 })
 
@@ -70,6 +89,7 @@ export const {
     updateCatInList,
     searchCatList,
     setListFromLocalStorage,
+    sortListByName,
 } = catSlice.actions
 
 export const selectCatsList = (state: AppState) => state.cats.catsList

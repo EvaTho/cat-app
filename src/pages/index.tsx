@@ -7,6 +7,7 @@ import Search from '@/components/Search/Search'
 import CatForm from '@/components/CatForm/CatForm'
 import Modal from '@/components/Modal/Modal'
 import AddCatButton from '@/components/Buttons/AddCatButton/AddCatButton'
+import Select from '@/components/Inputs/InputSelect/InputSelect'
 import { useState } from 'react'
 import { Cat } from '@/types/Cat'
 import * as DOMPurify from 'dompurify'
@@ -21,6 +22,7 @@ import {
     searchCatList,
     selectSearchResults,
     setListFromLocalStorage,
+    sortListByName,
 } from '@/store/catSlice'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -111,6 +113,12 @@ export default function Home() {
         setSearchInput(query)
         dispatch(searchCatList(query))
     }
+
+    const onSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const val = e.target.value
+        if (val === 'ascending') dispatch(sortListByName('ascending'))
+        if (val === 'descending') dispatch(sortListByName('descending'))
+    }
     return (
         <>
             <Head>
@@ -132,6 +140,18 @@ export default function Home() {
                         placeholder="Search"
                         onSearch={(e: React.ChangeEvent<HTMLInputElement>) =>
                             onSearch(e)
+                        }
+                    />
+                    <Select
+                        name="Sort"
+                        id="Sort"
+                        options={[
+                            { value: 'sortby', name: 'Sort by name:' },
+                            { value: 'ascending', name: 'ascending' },
+                            { value: 'descending', name: 'descending' },
+                        ]}
+                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                            onSortChange(e)
                         }
                     />
                 </section>
