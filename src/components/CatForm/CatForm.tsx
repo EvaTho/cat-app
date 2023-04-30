@@ -96,12 +96,12 @@ const CatForm: React.FC<CatFormProps> = ({
 
                                 switch (filename) {
                                     case 'jpg':
+                                    case 'jpeg':
                                     case 'bmp':
                                     case 'png':
                                     case 'tif':
                                     case 'webp':
                                     case 'avif':
-                                        alert('Allowed')
                                         break
                                     default:
                                         alert('Not allowed')
