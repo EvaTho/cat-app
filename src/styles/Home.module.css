@@ -8,12 +8,36 @@
 .catList {
     display: flex;
     flex-wrap: wrap;
+
+    justify-content: center;
+    align-items: center;
 }
 
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
 
     padding: 0 20px;
+    text-align: center;
+}
+
+@media screen and (min-width: 991px) {
+    .catList {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+}
+
+@media screen and (min-width: 479px) {
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+.sortWrapper {
+    padding: 20px;
 }

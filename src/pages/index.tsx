@@ -142,18 +142,20 @@ export default function Home() {
                             onSearch(e)
                         }
                     />
-                    <Select
-                        name="Sort"
-                        id="Sort"
-                        options={[
-                            { value: 'sortby', name: 'Sort by name:' },
-                            { value: 'ascending', name: 'ascending' },
-                            { value: 'descending', name: 'descending' },
-                        ]}
-                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                            onSortChange(e)
-                        }
-                    />
+                    <div className={styles.sortWrapper}>
+                        <Select
+                            name="Sort"
+                            id="Sort"
+                            options={[
+                                { value: 'sortby', name: 'Sort by name:' },
+                                { value: 'ascending', name: 'ascending' },
+                                { value: 'descending', name: 'descending' },
+                            ]}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLSelectElement>
+                            ) => onSortChange(e)}
+                        />
+                    </div>
                 </section>
                 <section className={styles.catList}>
                     {searchInput
